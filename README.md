@@ -1,19 +1,19 @@
-# Welcome to your Expo app 👋
+# LMS Project 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an [Expo](https://expo.dev) project with [Tailwind CSS v4](https://tailwindcss.com) and [NativeWind v5](https://www.nativewind.dev) for universal styling across iOS, Android, and Web.
 
 ## Get started
 
 1. Install dependencies
 
    ```bash
-   npm install
+   npm install --legacy-peer-deps
    ```
 
 2. Start the app
 
    ```bash
-   npx expo start
+   npm start
    ```
 
 In the output, you'll find options to open the app in a
@@ -24,6 +24,78 @@ In the output, you'll find options to open the app in a
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Tailwind CSS Setup
+
+This project uses Tailwind CSS v4 with NativeWind v5 for styling. Here's what you need to know:
+
+### Using Tailwind Classes
+
+Import components from `@/tw` instead of `react-native`:
+
+```tsx
+import { View, Text, ScrollView, Pressable } from "@/tw";
+
+export default function MyScreen() {
+  return (
+    <View className="flex-1 bg-white p-4">
+      <Text className="text-2xl font-bold text-gray-900">
+        Hello Tailwind!
+      </Text>
+      <Pressable className="bg-blue-500 p-4 rounded-lg mt-4">
+        <Text className="text-white text-center">Press me</Text>
+      </Pressable>
+    </View>
+  );
+}
+```
+
+### Available Components
+
+All components support the `className` prop:
+- `View`, `Text`, `ScrollView`, `Pressable`
+- `TextInput`, `TouchableHighlight`
+- `Image` (from `@/tw/image`)
+- `Animated` (from `@/tw/animated`)
+- `Link` (Expo Router link with className support)
+
+### Custom Styling
+
+Add custom theme variables in `src/global.css`:
+
+```css
+@layer theme {
+  @theme {
+    --color-primary: #3b82f6;
+    --font-custom: "MyFont", sans-serif;
+  }
+}
+```
+
+### Platform-Specific Styles
+
+Use platform media queries in your CSS:
+
+```css
+@media ios {
+  :root {
+    --font-sans: system-ui;
+  }
+}
+
+@media android {
+  :root {
+    --font-sans: normal;
+  }
+}
+```
+
+### Configuration Files
+
+- `metro.config.js` - Metro bundler with NativeWind transformer
+- `postcss.config.mjs` - PostCSS with Tailwind plugin
+- `src/global.css` - Global Tailwind imports and theme
+- `src/tw/` - CSS-wrapped React Native components
 
 ## Get a fresh project
 
